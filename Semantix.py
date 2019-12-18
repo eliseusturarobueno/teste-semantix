@@ -27,7 +27,6 @@ rdd_url.sortBy(lambda x: x[1], ascending = False).take(5)
 #Mapeia o RDD_404 e atribui ao RDD_DATA uma quebra atribuindo como chave a data e como valor 1
 rdd_data = rdd_404.map(lambda row: row.split("[")[1][0:11]).map(lambda x: (x, 1)).reduceByKey(lambda v1,v2: v1+v2)
 
-#Importa a biblioteca do Parse - Conta a quantidade de dias para atribuilos ao Take, imprime em ordem crescente de data todas as datas que contém o erro 404 e as respectivas quantidades deste erro por dia
+#Importa a biblioteca do Parse - Conta a quantidade de dias para atribui-los ao Take, imprime em ordem crescente de data todas as datas que contém o erro 404 e as respectivas quantidades deste erro por dia
 from dateutil.parser import parse
-rdd_dias = rdd_data.count()
-rdd_data.sortBy(lambda x: parse(x[0])).take(rdd_dias)
+rdd_data.sortBy(lambda x: parse(x[0])).take(rdd_data.count())
