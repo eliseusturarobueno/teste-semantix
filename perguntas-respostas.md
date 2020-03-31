@@ -1,11 +1,11 @@
 ﻿**1 - Qual o objetivo do comando cache em Spark?**
 
-**R:** O objetivo do comando cache em Spark é receber operações de resultados intermediarios lazy, armazená-los para que possam ser reutilizados, otimizado assim o desempenho de resultados, uma vez que sem este comando em ações repetidas teria que ser executado diversas vezes sobre um mesmo conjunto de dados mesmo que resultados intermediários sejam iguais.
+**R:** O objetivo do comando cache em Spark é receber operações de resultados intermediarios lazy, armazená-los para que possam ser reutilizados, otimizando assim o desempenho de resultados, uma vez que sem este comando em ações repetidas teria que ser executado diversas vezes sobre um mesmo conjunto de dados mesmo que resultados intermediários sejam iguais.
 
 **2 - O mesmo código implementado em Spark é normalmente mais rápido que a implementação equivalente em MapReduce. Por quê?**
 
 **R:** O mesmo código implementado em Spark é Sim normalmente mais rápido que a implementação equivalente em MapReduce.
-Para cada Job no MapReduce precisa ser iniciada uma instância da JVM, já no Spark, está instância fica sempre em execução em cada um dos nós, com isso o processo em Spark se torna normalmente mais rápido.
+Para cada Job no MapReduce precisa ser iniciada uma instância da JVM, já no Spark, esta instância fica sempre em execução em cada um dos nós, com isso o processo em Spark se torna normalmente mais rápido.
 Outro fator que torna mais rápido o uso de Spark é quando mais de um Job precisa ser executado, o uso de memória é menor pois o Job não precisa ser escrito em disco e depois lido novamente quando passado ao próximo Job como é no caso do MapReduce, o Spark permite que entre as operações o resultado intermediário seja passado diretamente através do cache dos dados em memória.
 
 **3 - Qual é a função do SparkContext?**
@@ -16,13 +16,13 @@ Pode ser acessado como uma variável em um programa para utilizar os seus recurs
 **4 - Explique com suas palavras o que é Resilient Distributed Datasets (RDD).**
 
 **R:** O RDD (Resilient Distributed Datasets) é como uma tabela em um banco de dados onde podem ser armazenados distintos tipos de dados. 
-É o principal conceito do Spark (em adstração de dados), que armazena estes dados em diversas partições (distributed) para otimização dos processos, consegue recompor dados (resilient) uma vez que traballha com vários nós dentro do cluster.
+É o principal conceito do Spark (em abstração de dados), que armazena estes dados em diversas partições (distributed) para otimização dos processos, consegue recompor dados (resilient) uma vez que traballha com vários nós dentro do cluster.
 São imutáveis (podendo sofrer transformações que resultam em novos RDDs), são objetos apenas de leitura.
 Um mesmo RDD pode ser executado ao mesmo tempo por diversas partições.
 
 **5 - GroupByKey é menos eficiente que reduceByKey em grandes dataset. Por quê?**
 
-**R:** Com o GrupyByKey se transfere todo o DataSet pela rede, de uma única vez, já com o ReduceByKey trabalha com somas parciais através de cada chave em cada partição com isto há a redução de grande tráfego em rede, além de uma alocação de memoria muito menor, logo após executa a soma das parciais nos executores finais.
+**R:** Com o GrupyByKey se transfere todo o DataSet pela rede, de uma única vez, já o ReduceByKey trabalha com somas parciais através de cada chave em cada partição, com isto há uma redução de grande tráfego em rede, além de uma alocação de memoria muito menor, logo após executa a soma das parciais nos executores finais.
 Por esta razão conclui-se que a performace e desempenho de ReduceByKey em grandes DataSets é muito mais considerável, gerando um impácto mais positivo durante e ao final de sua execução.
 
 **Explique o que o código Scala abaixo faz**
@@ -36,8 +36,8 @@ Por esta razão conclui-se que a performace e desempenho de ReduceByKey em grand
 5. counts.saveAsTextFile ( "hdfs://..." )
 ```
 
-**Linha 1:** Uma RDD é criada, onde recebe o caminho do arquivo que será usado para manipulação posteriormente.
-**Linha 2:** Outra RDD é criada, onde recebe a primeira aplicando uma quebra de strings atravez do comando split que está sendo feito pelos espaços em branco, pegando as sequencias de cada linha e criando assim uma coleção de palavras.
+**Linha 1:** Um RDD é criado, onde recebe o caminho do arquivo que será usado para manipulação posteriormente.
+**Linha 2:** Outro RDD é criado, onde recebe a primeira aplicando uma quebra de strings através do comando split que está sendo feito pelos espaços em branco, pegando as sequências de cada linha e criando assim uma coleção de palavras.
 **Linha 3:** É feito o mapeamento, onde cada palavra é aplicado o conceito de chave-valor, onde a chave é a palavra e o valor definido 1.
 **Linha 4:** Os valores definidos como 1 são agrupados de acordo com a chave e aplicados o valor 1 para cada vez que a palavra aparecer na busca.
 **Linha 5:** Os valores são contados e o RDD salvo em um arquivo de texto no caminho informado.
